@@ -3,7 +3,7 @@ import "pe"
 rule qbot_MAL_DLL
 {
     meta:
-        description = "<word>"
+        description = "Detects a variant of the QBOT malware that masquerades as libgdk-win32-2.0-0.dll."
         author = "<Aaron Dellamano>"
         date = "<October 17, 2025>"
         hash = "6a8557a2f8e1338e6edb2a07c345882389230ea24ffeb741a59621b7e8b56c59"
