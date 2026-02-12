@@ -1,0 +1,29 @@
+title: Windows - Appinstaller process execution with IPv4
+id: f3258f00-9a81-49c4-be2c-4032daa51a9e
+status: experimental
+description: Detects execution of AppInstaller.exe with an IPv4 literal in the command line, which may indicate retrieval from a direct IP address.
+references: 
+    - https://x.com/notwhickey/status/1333900137232523264
+    - https://lolbas-project.github.io/lolbas/Binaries/AppInstaller/
+    - https://docs.microsoft.com/en-us/windows/win32/appinstaller/appinstaller-overview
+    - https://attack.mitre.org/techniques/T1105/
+author: Aaron Dellamano
+date: 2026/02/12
+tags: 
+    - attack.command_and_control
+    - attack.t1105
+    - lolbas
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    bin:
+        Image|endswith: '\AppInstaller.exe'
+    cmdline_ipv4:
+        CommandLine|re: \b\d{1,3}(?:\.\d{1,3}){3}\b
+    condition: bin and cmdline_ipv4
+falsepositives:
+    - Internal software distribution servers using IP literals
+    - Lab/test deployments
+    - Developer testing scenarios
+level: low
