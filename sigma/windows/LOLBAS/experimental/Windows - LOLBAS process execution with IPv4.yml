@@ -1,0 +1,41 @@
+title: Windows - Suspicious LOLBAS Downloader Execution Using Direct IPv4
+id: e3b651ec-e13f-4126-a8e0-2edea7e28f4b
+status: experimental
+description: Detects execution of native downloader LOLBAS binaries with a direct IPv4 URL initiated from a script engine parent process. This may indicate staged payload retrieval from attacker-controlled infrastructure.
+references:
+    - https://lolbas-project.github.io
+author: Aaron Dellamano
+date: 2026/02/12
+tags:
+    - attack.execution
+    - attack.t1218
+    - lolbas
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    bin:
+        Image|endswith:
+            - '\Bitsadmin.exe'
+            - '\Certutil.exe'
+            - '\Mshta.exe'
+            - '\Regsvr32.exe'
+            - '\Rundll32.exe'
+            - '\Msiexec.exe'
+            - '\Installutil.exe'
+            - '\curl.exe'
+
+    cmdline_ipv4:
+        CommandLine|re: '(?i)\b(?:https?|ftp)://(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)'
+
+    suspicious_parent:
+        ParentImage|endswith:
+            - '\mshta.exe'
+            - '\wscript.exe'
+            - '\cscript.exe'
+
+    condition: bin and cmdline_ipv4 and suspicious_parent
+
+falsepositives:
+    - Rare administrative scripting activity retrieving content via direct IP
+level: medium

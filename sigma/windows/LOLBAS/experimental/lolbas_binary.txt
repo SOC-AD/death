@@ -1,0 +1,16 @@
+Bitsadmin.exe
+Certutil.exe
+Ftp.exe
+Sftp.exe
+ssh.exe
+Mshta.exe
+Regsvr32.exe
+Rundll32.exe
+Msiexec.exe
+Installutil.exe
+AppInstaller.exe
+winget.exe
+Wmic.exe
+Netsh.exe
+Powershell.exe
+curl.exe
