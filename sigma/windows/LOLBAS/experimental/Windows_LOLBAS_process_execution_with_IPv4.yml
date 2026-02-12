@@ -9,7 +9,6 @@ date: 2026/02/12
 tags:
     - attack.execution
     - attack.t1218
-    - lolbas
 logsource:
     category: process_creation
     product: windows
